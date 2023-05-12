@@ -1,10 +1,10 @@
-import React from "react";
-import { useEffect } from "react";
-import { Link, NavLink, useParams, useSearchParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 
 export default function CountryDetails({ countriesData }) {
+  const [filteredCountry, setFilteredCountry] = useState(null);
+
   const { countryId } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
 
   // Get current country by params
   const currentCountry = countriesData.find((eachCountry) => {
@@ -22,7 +22,7 @@ export default function CountryDetails({ countriesData }) {
   return (
     <div className="col-7">
       <img
-        src={`https://flagpedia.net/data/flags/w580/${currentCountry.alpha2Code.toLowerCase()}.png`}
+        src={`https://flagpedia.net/data/flags/icon/72x54/${currentCountry.alpha2Code.toLowerCase()}.png`}
         style={{ width: "200px" }}
         alt={currentCountry.name.common}
       ></img>
