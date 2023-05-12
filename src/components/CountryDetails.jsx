@@ -2,18 +2,18 @@ import React from "react";
 import { useEffect } from "react";
 import { Link, NavLink, useParams, useSearchParams } from "react-router-dom";
 
-export default function CountryDetails({ countries }) {
+export default function CountryDetails({ countriesData }) {
   const { countryId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Get current country by params
-  const currentCountry = countries.find((eachCountry) => {
+  const currentCountry = countriesData.find((eachCountry) => {
     return eachCountry.alpha3Code === countryId;
   });
 
   // A function to get country name from cuntry code
   function findBorderName(code) {
-    const country = countries.find((eachCountry) => {
+    const country = countriesData.find((eachCountry) => {
       return eachCountry.alpha3Code === code;
     });
     return country.name.common;

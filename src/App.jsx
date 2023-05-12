@@ -17,46 +17,61 @@ import CountriesList from "./components/CountriesList";
 import CountryDetails from "./components/CountryDetails";
 
 // Get Api
-import fetch from "node-fetch";
+// import fetch from "node-fetch"; // Don't need this
 import axios from "axios";
 
 function App() {
   // Declare data - one from JSON one from API
   const [countriesData, setCountriesData] = useState(countries);
-  const [countriesDataFromApi, setCountriesDataFromApi] = useState();
+  const [countriesDataFromApi, setCountriesDataFromApi] = useState([]); //Question: What is [] for?
 
-  // Use fetch
-  /* useEffect(() => {
-    // Countries data from API
-    fetch("https://ih-countries-api.herokuapp.com/countries", {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((data) => setCountriesDataFromApi(data));
-  }, []); */
+  // **** Use fetch **** //
+  /* const fetchData = async () => {
+    try {
+      const response = await fetch(
+        "https://ih-countries-api.herokuapp.com/countries"
+      );
+      const parsed = await response.json();
+      setCountriesDataFromApi(parsed);
+    } catch (error) {
+      console.log(error);
+    }
+  }; */
 
-  // Use Axios
+  // **** Use axios **** //
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "https://ih-countries-api.herokuapp.com/countries"
+      );
+      console.log("response.status", response.status);
+      if (response.status === 200) {
+        console.log("response", response.data);
+        setCountriesDataFromApi(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    axios
-      .get("https://ih-countries-api.herokuapp.com/countries")
-      .then((res) => {
-        setCountriesDataFromApi(res.data);
-      });
+    fetchData();
   }, []);
 
-  console.log("countriesDataFromApi", countriesDataFromApi);
+  // console.log("countriesDataFromApi", countriesDataFromApi);
 
   return (
     <div className="App">
       <Navbar />
       <div className="container">
         <div className="row">
-          <CountriesList countries={countries} />
+          <CountriesList countriesData={countriesDataFromApi} />
           <Routes>
             <Route index />
             <Route
               path="/:countryId"
-              element={<CountryDetails countries={countries} />}
+              element={<CountryDetails countriesData={countriesDataFromApi} />}
             />
             <Route path="*" element={<h1>404 Not Found</h1>} />
           </Routes>

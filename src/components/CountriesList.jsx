@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.css";
 // Router
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
-export default function CountriesList({ countries }) {
+export default function CountriesList({ countriesData }) {
   // A function turn alpha2Code into its flag emoji
   /* const getFlagEmoji = (alpha2Code) => {
     const codePoints = alpha2Code
@@ -17,7 +17,7 @@ export default function CountriesList({ countries }) {
   return (
     <div className="col-5" style={{ maxHeight: "90vh", overflow: "scroll" }}>
       <div className="list-group">
-        {countries.map((eachCountry) => {
+        {countriesData.map((eachCountry) => {
           return (
             <Link
               key={eachCountry.alpha3Code.toLowerCase()}
