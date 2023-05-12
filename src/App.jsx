@@ -16,29 +16,45 @@ import Navbar from "./components/Navbar";
 import CountriesList from "./components/CountriesList";
 import CountryDetails from "./components/CountryDetails";
 
+// Get Api
+import fetch from "node-fetch";
+import axios from "axios";
+
 function App() {
   const [countriesDataFromApi, setCountriesDataFromApi] = useState();
 
-  useEffect(() => {
+  // Use fetch
+  /* useEffect(() => {
     // Countries data from API
     fetch("https://ih-countries-api.herokuapp.com/countries", {
       method: "GET",
     })
       .then((response) => response.json())
       .then((data) => setCountriesDataFromApi(data));
+  }, []); */
+
+  // Use Axios
+  useEffect(() => {
+    axios
+      .get("https://ih-countries-api.herokuapp.com/countries")
+      .then((res) => {
+        setCountriesDataFromApi(res.data);
+      });
   }, []);
+
+  console.log("countriesDataFromApi", countriesDataFromApi);
 
   return (
     <div className="App">
       <Navbar />
       <div className="container">
         <div className="row">
-          <CountriesList countries={countriesDataFromApi} />
+          <CountriesList countries={countries} />
           <Routes>
             <Route index />
             <Route
               path="/:countryId"
-              element={<CountryDetails countries={countriesDataFromApi} />}
+              element={<CountryDetails countries={countries} />}
             />
             <Route path="*" element={<h1>404 Not Found</h1>} />
           </Routes>
