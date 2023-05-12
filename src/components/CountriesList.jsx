@@ -20,7 +20,8 @@ export default function CountriesList({ countries }) {
         {countries.map((eachCountry) => {
           return (
             <Link
-              class="list-group-item list-group-item-action"
+              key={eachCountry.alpha3Code.toLowerCase()}
+              className="list-group-item list-group-item-action"
               to={"/" + eachCountry.alpha3Code}
             >
               <img

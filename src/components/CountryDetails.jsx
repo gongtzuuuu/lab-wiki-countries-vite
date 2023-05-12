@@ -45,7 +45,7 @@ export default function CountryDetails({ countries }) {
               <ul>
                 {currentCountry.borders.map((border) => {
                   return (
-                    <li>
+                    <li key={border}>
                       <a href={border}>{findBorderName(border)}</a>
                     </li>
                   );
