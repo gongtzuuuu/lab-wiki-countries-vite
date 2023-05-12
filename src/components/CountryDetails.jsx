@@ -6,10 +6,12 @@ export default function CountryDetails({ countries }) {
   const { countryId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  // Get current country by params
   const currentCountry = countries.find((eachCountry) => {
     return eachCountry.alpha3Code === countryId;
   });
 
+  // A function to get country name from cuntry code
   function findBorderName(code) {
     const country = countries.find((eachCountry) => {
       return eachCountry.alpha3Code === code;
@@ -46,7 +48,9 @@ export default function CountryDetails({ countries }) {
                 {currentCountry.borders.map((border) => {
                   return (
                     <li key={border}>
-                      <a href={border}>{findBorderName(border)}</a>
+                      <Link key={border} to={"/" + border}>
+                        {findBorderName(border)}
+                      </Link>
                     </li>
                   );
                 })}

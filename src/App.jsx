@@ -2,14 +2,13 @@ import React from "react";
 
 // Styling
 import "bootstrap/dist/css/bootstrap.css";
-import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 // Data
 import countries from "./countries.json";
 
 // Router
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 // Pages
 import Navbar from "./components/Navbar";
