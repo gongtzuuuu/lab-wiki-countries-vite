@@ -1,15 +1,28 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
 export default function CountryDetails({ countriesData }) {
-  const [filteredCountry, setFilteredCountry] = useState(null);
-
+  // Set filtered country
+  const [filteredCountry, setFilteredCountry] = useState([]);
   const { countryId } = useParams();
+  console.log("countryId", countryId); // Works successfully
 
   // Get current country by params
-  const currentCountry = countriesData.find((eachCountry) => {
+  /* const filteredCountry = countriesData.find((eachCountry) => {
     return eachCountry.alpha3Code === countryId;
-  });
+  }); */
+
+  useEffect(() => {
+    axios
+      .get(`https://ih-countries-api.herokuapp.com/countries/${countryId}`)
+      .then((response) => {
+        setFilteredCountry(response.data);
+        console.log("response", response.data); // No response
+        console.log("response status", response.status); // No response
+      })
+      .catch((error) => console.log(error));
+  }, [countriesData, countryId]);
 
   // A function to get country name from cuntry code
   function findBorderName(code) {
@@ -19,25 +32,27 @@ export default function CountryDetails({ countriesData }) {
     return country.name.common;
   }
 
+  console.log("filteredCountry", filteredCountry);
+
   return (
     <div className="col-7">
+      <h1>{filteredCountry.name.common}</h1>
       <img
-        src={`https://flagpedia.net/data/flags/icon/72x54/${currentCountry.alpha2Code.toLowerCase()}.png`}
+        src={`https://flagpedia.net/data/flags/w580/${filteredCountry.alpha2Code.toLowerCase()}.png`}
+        alt={filteredCountry.name.common}
         style={{ width: "200px" }}
-        alt={currentCountry.name.common}
       ></img>
-      <h1>{currentCountry.name.common}</h1>
       <table className="table">
         <thead></thead>
         <tbody>
           <tr>
             <td style={{ width: "30%" }}>Capital</td>
-            <td>{currentCountry.capital}</td>
+            <td>{filteredCountry.capital}</td>
           </tr>
           <tr>
             <td>Area</td>
             <td>
-              {currentCountry.area} km
+              {filteredCountry.area} km
               <sup>2</sup>
             </td>
           </tr>
@@ -45,7 +60,7 @@ export default function CountryDetails({ countriesData }) {
             <td>Borders</td>
             <td>
               <ul>
-                {currentCountry.borders.map((border) => {
+                {filteredCountry.borders.map((border) => {
                   return (
                     <li key={border}>
                       <Link key={border} to={"/" + border}>

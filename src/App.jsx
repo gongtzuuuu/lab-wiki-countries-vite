@@ -45,9 +45,9 @@ function App() {
       const response = await axios.get(
         "https://ih-countries-api.herokuapp.com/countries"
       );
-      console.log("response.status", response.status);
+      // console.log("response.status", response.status);
       if (response.status === 200) {
-        console.log("response", response.data);
+        // console.log("response", response.data);
         setCountriesDataFromApi(response.data);
       }
     } catch (error) {
