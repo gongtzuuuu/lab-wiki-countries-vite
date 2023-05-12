@@ -21,6 +21,8 @@ import fetch from "node-fetch";
 import axios from "axios";
 
 function App() {
+  // Declare data - one from JSON one from API
+  const [countriesData, setCountriesData] = useState(countries);
   const [countriesDataFromApi, setCountriesDataFromApi] = useState();
 
   // Use fetch
